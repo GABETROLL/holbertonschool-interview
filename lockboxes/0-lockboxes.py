@@ -4,6 +4,8 @@ You have n number of locked boxes in front of you.
 Each box is numbered sequentially from 0 to n - 1 and each box may contain keys to the other boxes.
 Box 0 is unlocked, and every other box is.
 
+Not all the keys are guaranteed to open boxes in the range of the list.
+
 Write a method that determines if all the boxes can be opened.
 """
 
@@ -32,7 +34,12 @@ def canUnlockAll(boxes):
             # print(box_index, box_is_opened)
 
             for box_key in boxes[box_index]:
-                new_boxes_opened_status[box_key] = True
+
+                try:
+                    new_boxes_opened_status[box_key] = True
+                except IndexError:
+                    pass
+                # key could be out of range
 
         if new_boxes_opened_status == boxes_opened_status:
             # No more boxes can be opened.
