@@ -8,7 +8,7 @@ Write a method that determines if all the boxes can be opened.
 """
 
 
-def canUnlockAll(boxes: list[list[int]]) -> bool:
+def canUnlockAll(boxes):
     """
     Each list in 'boxes' represents the list of keys
     in each box,
@@ -18,12 +18,12 @@ def canUnlockAll(boxes: list[list[int]]) -> bool:
     Returns weather or not ALL OF THE BOXES CAN BE UNLOCKED.
     """
 
-    boxes_opened_status: list[bool] = [False for _ in boxes]
+    boxes_opened_status = [False for _ in boxes]
     boxes_opened_status[0] = True
 
     while True:
 
-        new_boxes_opened_status: list[bool] = boxes_opened_status.copy()
+        new_boxes_opened_status = boxes_opened_status.copy()
 
         for box_index, box_is_opened in enumerate(boxes_opened_status):
             if not box_is_opened:
@@ -39,5 +39,5 @@ def canUnlockAll(boxes: list[list[int]]) -> bool:
             break
 
         boxes_opened_status = new_boxes_opened_status
-    
+
     return all(boxes_opened_status)
