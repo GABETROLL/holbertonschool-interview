@@ -30,7 +30,7 @@ listint_t *insert_node(listint_t **head, int number)
 		current = &(**current).next;
 
 	number_node->n = number;
-	number_node->next = (**current).next;
+	number_node->next = *current;
 
 	*current = number_node;
 
