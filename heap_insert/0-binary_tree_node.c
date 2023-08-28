@@ -4,7 +4,8 @@
 /**
  * binary_tree_node - TRIES TO:
  * create new binary_tree_t type node in memory,
- * with: 'value' as its 'n' int attribute, 'parent' as its 'parent',
+ * with: 'value' as its 'n' int attribute, 'parent' as its 'parent'
+ * (even if 'parent' is NULL),
  * and NULL children; and return its address.
  *
  * If allocating it in memory fails, this function just returns
@@ -25,6 +26,8 @@ binary_tree_t *binary_tree_node(binary_tree_t *parent, int value) {
 
 	result->n = value;
 	result->parent = parent;
+	result->left = NULL;
+	result->right = NULL;
 
 	return (result);
 }
