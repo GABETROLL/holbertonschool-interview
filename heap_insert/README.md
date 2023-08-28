@@ -18,3 +18,6 @@ Run:
 - Create new binary tree node with parent, int, and no children
 - Insert into heap
 
+## Coding Style Linter Used in this Project
+[Betty](https://github.com/hs-hq/Betty/)
+
