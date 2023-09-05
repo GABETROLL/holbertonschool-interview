@@ -1,4 +1,4 @@
-#!/usr/bin/python3.11
+#!/usr/bin/python3
 """
 In a text file, there is a single character H.
 Only by using Ctrl+a and Ctrl+v,
@@ -8,7 +8,7 @@ necessary to make the text file have n H's?
 from math import sqrt
 
 
-def minOperations(n: int) -> int:
+def minOperations(n):
     """
     Returns the amount of commands (Ctrl+a or Ctrl+v)
     it takes to transform a text file with one H
