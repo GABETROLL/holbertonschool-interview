@@ -49,7 +49,7 @@ def minOperations(n):
     0,             6,                   8,                      9...
 
     0 H 2 HH 4 HHHH 5 HHHHHH 6 HHHHHHHH 7 HHHHHHHHHH 8 HHHHHHHHHHHH
-    0 H 3 HHH 5 HHHHHH 6 HHHHHHHHH 7 
+    0 H 3 HHH 5 HHHHHH 6 HHHHHHHHH 7
 
     After looking at the data, turns out it's a prime factorization, which
     I believe is an NP-hard problem.
@@ -67,4 +67,3 @@ def minOperations(n):
 
     ALL PRIME NUMBER P*H IS JUST COPYING H AND PASTING IT P - 1 TIMES.
     """
-
