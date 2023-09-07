@@ -5,31 +5,50 @@ Only by using Ctrl+a and Ctrl+v,
 what is the least amount of commands
 necessary to make the text file have n H's?
 
-Here's me trying to figure it out:
+Proof:
 
-1  2  3  4  5  6  7  8  9  10  11  12  13  14  15  16  17  18  19  20
+Executing COPY-ALL and PASTE M - 1 times is multiplying
+the initial H in the file by M.
 
-0, 2,    4,    5,    6,     7,      8,      9,     10,     11,     12...
-0,    3,       5,       6,          7,          8,          9...
-0,       4,          6,             7,              8,              9...
-0,          5,              7,                  8,                  9...
-0,             6,                   8,                      9...
+Every time we execute COPY-ALL, we increase
+the amount of H's in the imaginary clipboard.
 
-0 H 2 HH 4 HHHH 5 HHHHHH 6 HHHHHHHH 7 HHHHHHHHHH 8 HHHHHHHHHHHH
-0 H 3 HHH 5 HHHHHH 6 HHHHHHHHH 7
+This means that after every command we execute,
+the amount of H's in the clipboard can either
+stay the same as before, or increase,
+BUT NEVER DECREASE.
 
-After looking at the data, turns out it's a type of factorization.
-Examples:
+So, this question could be rephrased as:
 
-20H is just copying 5H and pasting it 4 times
-35H is just copying 7H and pasting it 5 times
+clipboard = 0
+file = 1
 
-100H is just copying 10H and pasting it 10 times;
-10H is just copying 5H and pasting it 2H times
+while file < N:
 
-ALL PRIME NUMBER P*H IS JUST COPYING H AND PASTING IT P - 1 TIMES.
+    option 0:
+        clipboard = file
+    option 1:
+        file += clipboard
+
+Every prime number N of H's can only be achieved
+with 1 COPY-ALL and N - 1 PASTEs, since there's no way
+to copy multiple H's and arrive at prime number N without
+over/under-shooting, and there's no way to copy multiple H's
+at a time without losing the ability to paste just one H.
+
+As a base case, if N is prime, then the amount of
+moves it would take to get 1 H to N H's in the file with just
+those moves should be N.
+
+If N isn't prime, then N MUST have prime factors.
+We can multiply the current amount of H's in the file by these prime factors
+one by one, from 1H to N H's.
+
+I don't know if that's the fastest way,
+
+but I assume that the least amount of commands it would
+take to fultill the goal is THE SUM OF ALL OF N's PRIME FACTORS.
 """
-from math import sqrt
 
 
 def minOperations(n):
@@ -38,27 +57,20 @@ def minOperations(n):
     it takes to transform a text file with one H
     to have n H's.
 
-    If the aount of H's 'n' is not possible
+    If the amount of H's 'n' is not possible
     to be achieved (negative or 0 H amounts),
     this function returns 0.
 
     (NOTE THAT FOR 1 H, THE RESUT IS ALSO 0!)
     """
 
-    if n < 1:
+    if n <= 1:
         return 0
 
-    # base case
-    if n == 1:
-        return 0
+    prime_factor = 1
 
-    # a is the 2nd biggest factor of n,
-    # and b is the biggest factor of n.
+    while True:
+        prime_factor += 1
 
-    a = int(sqrt(n))
-
-    while n / a % 1 != 0:
-        a -= 1
-    b = n // a
-
-    return minOperations(a) + b
+        if n / prime_factor % 1 == 0:
+            return prime_factor + minOperations(n // prime_factor)
