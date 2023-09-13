@@ -18,5 +18,6 @@ Write a function ``void sandpiles_sum(int grid1[3][3], int grid2[3][3])`` that s
 
 **(you can assume that ``grid1`` and ``grid2`` are stable when they are passed in the function)**
 ## Credits
-All of the ``print`` functions in this folder tree and the ``tests/0-main.c`` file were provided by Holberton.
+All of the ``print`` functions in ``0-sandpiles.c`` and the ``tests/0-main.c`` file were provided by Holberton.
 
+The function ``print_grid`` is written both in ``0-sandpiles.c`` and ``tests/0-main.c`` as a static function. Sorry for the inconvenience.

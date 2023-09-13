@@ -1,8 +1,28 @@
 #include "sandpiles.h"
-#include <string.h>
+#include <stdio.h>
 #include <stdbool.h>
 
-#include <stdio.h>
+/**
+ * print_grid - Print 3x3 grid
+ * @grid: 3x3 grid
+ *
+ */
+static void print_grid(int grid[3][3])
+{
+    int i, j;
+
+    for (i = 0; i < 3; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            if (j)
+                printf(" ");
+            printf("%d", grid[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 
 /**
  * add_grid - Adds grid2 to grid1,
@@ -36,7 +56,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 	add_grid(grid1, grid2);
 
 	do {
-		int future_grid[3][3] = {0};
+		int future_grid[3][3];
 
 		bool grid_is_stable;
 
