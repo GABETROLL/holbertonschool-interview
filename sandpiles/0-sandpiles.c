@@ -79,6 +79,76 @@ void copy_grid(int source_grid[3][3], int destination_grid[3][3])
 	}
 }
 
+/**
+ * copy_and_topple - Simulates the 'toppling' round
+ * talked about in the README.md:
+ *
+ * modifies 'future_grid', REMOTELY & IN-PLACE
+ * to be the end result of the toppling round
+ * for 'current_grid':
+ *
+ * FIRST COPIES 'current_grid' INTO 'future_grid'
+ * with 'copy_grid', written above.
+ *
+ * Takes 4 sandpiles from each cell with > 3
+ * sandpiles in 'current_grid' and places one
+ * in the neighbor above, below, left and right.
+ *
+ * If the neighbor is outside the grid, the sandpile
+ * is ignored.
+ *
+ * @current_grid: POINTER TO grid that
+ * will be toppled in 'future_grid'
+ * if unstable
+ * @future_grid: POINTER TO a grid
+ * that will be
+ * the toppled result of 'current_grid'
+ * if 'current_grid' was unstable, or a copy of
+ * 'current_grid' if it was already stable
+ *
+ * Return: true if 'current_grid' was stable,
+ * false if 'current_grid' wasn't stable.
+ */
+bool copy_and_topple(int current_grid[3][3], int future_grid[3][3])
+{
+	size_t i, j;
+	bool current_grid_was_stable = true;
+
+	/*
+	 * if a cell with > 3 sandpiles in 'current_grid'
+	 * is never found, then 'result' must be true.
+	 *
+	 * If such cell is found, then result can
+	 * be turned to false then.
+	 */
+
+	copy_grid(current_grid, future_grid);
+
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (current_grid[i][j] > 3)
+			{
+				current_grid_was_stable = false;
+
+				future_grid[i][j] -= 4;
+
+				if (i > 0)
+					future_grid[i - 1][j]++;
+				if (i < 2)
+					future_grid[i + 1][j]++;
+				if (j > 0)
+					future_grid[i][j - 1]++;
+				if (j < 2)
+					future_grid[i][j + 1]++;
+			}
+		}
+	}
+
+	return (current_grid_was_stable);
+}
+
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
 	add_grid(grid1, grid2);
@@ -86,61 +156,25 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 	do {
 		int future_grid[3][3];
 
-		bool grid_is_stable;
-
-		size_t i;
-		size_t j;
+		bool grid1_was_stable = copy_and_topple(grid1, future_grid);
 
 		/*
-		 * make a copy of grid1
-		 * that should be the next generation
-		 * of grid1,
-		 * where the toppling should be simulated in,
-		 * if it should happen.
-		 */
-		copy_grid(grid1, future_grid);
-
-		grid_is_stable = true;
-		/*
-		 * TOPPLING ROUND STARTS HERE.
+		 * Copy 'grid1' into 'future_grid' and
+		 * simulate 'future_grid's current toppling round.
 		 *
-		 * Both checks for grid1 being unstable
-		 * and does the toppling in 'future_grid'
-		 * if it is.
+		 * Break loop if 'grid1' was already stable,
+		 * or copy 'future_grid' back into 'grid1'
+		 * if 'grid' originally wasn't stable,
+		 *
+		 * to try again.
 		 */
-		for (i = 0; i < 3; i++)
-		{
-			for (j = 0; j < 3; j++)
-			{
-				if (grid1[i][j] > 3)
-				{
-					grid_is_stable = false;
 
-					future_grid[i][j] -= 4;
-
-					if (i > 0)
-						future_grid[i - 1][j]++;
-					if (i < 2)
-						future_grid[i + 1][j]++;
-					if (j > 0)
-						future_grid[i][j - 1]++;
-					if (j < 2)
-						future_grid[i][j + 1]++;
-				}
-			}
-		}
-
-		if (grid_is_stable)
+		if (grid1_was_stable)
 			break;
 
 		puts("=");
 		print_grid(grid1);
 
-		/*
-		 * Toppling process finished. Copying 'future_grid'
-		 * back into 'grid1' to once again verify that it's stable,
-		 * and toppling once more if it isn't.
-		 */
 		copy_grid(future_grid, grid1);
 	} while (true);
 }
