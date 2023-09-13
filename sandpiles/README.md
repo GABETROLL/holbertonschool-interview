@@ -2,6 +2,16 @@
 
 [Sandpiles - Numberphile](https://www.youtube.com/watch?v=1MtEUErz7Gg)
 
+## Usage
+### Compile
+``gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c tests/0-main.c -o tests/o``
+### Run
+``./tests/o``
+###Test
+Edit ``tests/0-main.c``, change the inputs, and watch the algorithm do its thing.
+Or break the program ;) Have fun!
+## Coding Style
+This project uses the [Betty coding style](https://github.com/hs-hq/Betty)
 ## Imagine
 There are 2 3x3 grid floors with 3 or less sandpiles per cell
 
