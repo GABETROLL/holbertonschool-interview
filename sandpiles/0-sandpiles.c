@@ -149,6 +149,43 @@ bool copy_and_topple(int current_grid[3][3], int future_grid[3][3])
 	return (current_grid_was_stable);
 }
 
+/**
+ * sandpiles_sum - MAIN FUNCTION - SIMULATES
+ * THE PROBLEM TALKED ABOUT IN THE README.md "Imagine"
+ * SECTION.
+ *
+ * Imagine that 'grid1' and 'grid2' are grid floors
+ * of sandpiles.
+ *
+ * Both of these are stable, MEANING that they
+ * all have 3 OR LESS sandpiles in all their 9 cells.
+ *
+ * If we drop the sandpiles on 'grid2' onto 'grid1',
+ * as a matrix addition,
+ *
+ * either 'grid1' would still have 3 or less sandpiles
+ * in each of its 9 cells, and be stable; or be unstable.
+ *
+ * If it is unstable, we begin a "toppling" round loop,
+ * where we make a copy of grid1, collapse 4 sandpiles from
+ * each of the cells with > 3 sandpiles in the copy grid,
+ * and give 1 to the neighbors up, down, left and right.
+ *
+ * (If the neighbor is outside the grid, the sandpile
+ * is forgotten)
+ *
+ * Then copy the copy back into 'grid1'.
+ *
+ * Rinse and repeat until 'grid1' is stable again.
+ *
+ * @grid1: The grid which will have the sandpiles from the
+ * other grid dumped on, and have sandpile toppling rounds
+ * simulated with
+ *
+ * @grid2: The grid of sandpiles to dump on 'grid1'
+ *
+ * Return: Nothing
+ */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
 	add_grid(grid1, grid2);
