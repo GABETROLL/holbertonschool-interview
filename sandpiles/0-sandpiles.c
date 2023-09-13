@@ -66,7 +66,9 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 		/*
 		 * make a copy of grid1
 		 * that should be the next generation
-		 * of grid1
+		 * of grid1,
+		 * where the toplling should be simulated in,
+		 * if it should happen.
 		 */
 		for (i = 0; i < 3; i++)
 		{
@@ -78,20 +80,12 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 
 		grid_is_stable = true;
 		/*
-		 * CREATING NEXT GENERATION OF 'grid1':
+		 * TOPPLING ROUND STARTS HERE.
 		 *
-		 * Subtract 4 from the cells that have more than 3 sandpiles,
-		 * and those sandpiles to its neighbors
-		 * up, down, left and right; if the grid were
-		 * a physical floor with sandpiles on it.
-		 *
-		 * BUT only if those neighbors are inside the grid.
-		 *
-		 * IF ANY CELL WERE TO HAVE > 3 SANDPILES IN IT,
-		 * 'grid1' IS STILL UNSTABLE, AND 'grid_is_stable'
-		 * SHOULD BE CHANGED TO 'false'.
+		 * Both checks for grid1 being unstable
+		 * and does the toppling in 'future_grid'
+		 * if it is.
 		 */
-
 		for (i = 0; i < 3; i++)
 		{
 			for (j = 0; j < 3; j++)
@@ -114,12 +108,6 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 			}
 		}
 
-		/*
-		 * If there are no more cells with > 3 sandpiles,
-		 * We have finally stabilized the grid,
-		 * and we can break the loop!
-		 */
-
 		if (grid_is_stable)
 			break;
 
@@ -127,11 +115,9 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 		print_grid(grid1);
 
 		/*
-		 * Copy 'future_generation' back into 'grid1' to begin
-		 * the next toppling iteration,
-		 * since this one had cells with > 3 sandpiles,
-		 * we still need this next iteration to check that
-		 * the grid is stable then.
+		 * Toppling process finished. Copying 'future_grid'
+		 * back into 'grid1' to once again verify that it's stable,
+		 * and toppling once more if it isn't.
 		 */
 		for (i = 0; i < 3; i++)
 		{
@@ -140,7 +126,6 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 				grid1[i][j] = future_grid[i][j];
 			}
 		}
-
 	} while (true);
 }
 
