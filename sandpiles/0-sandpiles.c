@@ -18,9 +18,13 @@
  */
 void add_grid(int grid1[3][3], int grid2[3][3])
 {
-	for (size_t i = 0; i < 3; i++)
+	size_t i;
+
+	for (i = 0; i < 3; i++)
 	{
-		for (size_t j = 0; j < 3; j++)
+		size_t j;
+
+		for (j = 0; j < 3; j++)
 		{
 			grid1[i][j] += grid2[i][j];
 		}
@@ -34,20 +38,25 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 	do {
 		int future_grid[3][3] = {0};
 
+		bool grid_is_stable;
+
+		size_t i;
+		size_t j;
+
 		/*
 		 * make a copy of grid1
 		 * that should be the next generation
 		 * of grid1
 		 */
-		for (size_t i = 0; i < 3; i++)
+		for (i = 0; i < 3; i++)
 		{
-			for (size_t j = 0; j < 3; j++)
+			for (j = 0; j < 3; j++)
 			{
 				future_grid[i][j] = grid1[i][j];
 			}
 		}
 
-		bool grid_is_stable = true;
+		grid_is_stable = true;
 		/*
 		 * CREATING NEXT GENERATION OF 'grid1':
 		 *
@@ -63,9 +72,9 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 		 * SHOULD BE CHANGED TO 'false'.
 		 */
 
-		for (size_t i = 0; i < 3; i++)
+		for (i = 0; i < 3; i++)
 		{
-			for (size_t j = 0; j < 3; j++)
+			for (j = 0; j < 3; j++)
 			{
 				if (grid1[i][j] > 3)
 				{
@@ -103,9 +112,9 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 		 * we still need this next iteration to check that
 		 * the grid is stable then.
 		 */
-		for (int i = 0; i < 3; i++)
+		for (i = 0; i < 3; i++)
 		{
-			for (int j = 0; j < 3; j++)
+			for (j = 0; j < 3; j++)
 			{
 				grid1[i][j] = future_grid[i][j];
 			}
