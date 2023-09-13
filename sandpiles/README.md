@@ -1,10 +1,13 @@
 # Sandpiles
+
+[Sandpiles - Numberphile](https://www.youtube.com/watch?v=1MtEUErz7Gg)
+
 ## Imagine
 There are 2 3x3 grid floors with 3 or less sandpiles per cell
 
 A grid is stable when there are 3 or less sandpiles per cell in it.
 
-You then perform a matrix addition with the 2nd grid being dropped above the first.
+You then perform a [matrix addition](https://www.khanacademy.org/math/precalculus/x9e81a4f98389efdf:matrices/x9e81a4f98389efdf:adding-and-subtracting-matrices/a/adding-and-subtracting-matrices) with the 2nd grid being dropped above the first.
 
 - If any cell in grid1 had > 3 sandpiles in it, grid1 is unstable. So, a __toppling round__ occurs:
 
