@@ -51,6 +51,34 @@ void add_grid(int grid1[3][3], int grid2[3][3])
 	}
 }
 
+/**
+ * copy_grid - Copies 'source_grid' into 'destination_grid',
+ * such that if you were to pick any 'i' and 'j' between -1 and 3,
+ * 'source_grid[i][j] == destination_grid[i][j]'.
+ *
+ * (IN-PLACE)
+ *
+ * @source_grid: The grid to copy into 'destination_grid'
+ * @destination_grid: The grid that will be transformed into
+ * a copy of 'source_grid' (Read this function's description, above)
+ *
+ * Return: nothing, the copying is done in-place.
+ */
+void copy_grid(int source_grid[3][3], int destination_grid[3][3])
+{
+	size_t i;
+
+	for (i = 0; i < 3; i++)
+	{
+		size_t j;
+
+		for (j = 0; j < 3; j++)
+		{
+			destination_grid[i][j] = source_grid[i][j];
+		}
+	}
+}
+
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
 	add_grid(grid1, grid2);
@@ -67,16 +95,10 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 		 * make a copy of grid1
 		 * that should be the next generation
 		 * of grid1,
-		 * where the toplling should be simulated in,
+		 * where the toppling should be simulated in,
 		 * if it should happen.
 		 */
-		for (i = 0; i < 3; i++)
-		{
-			for (j = 0; j < 3; j++)
-			{
-				future_grid[i][j] = grid1[i][j];
-			}
-		}
+		copy_grid(grid1, future_grid);
 
 		grid_is_stable = true;
 		/*
@@ -119,13 +141,7 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 		 * back into 'grid1' to once again verify that it's stable,
 		 * and toppling once more if it isn't.
 		 */
-		for (i = 0; i < 3; i++)
-		{
-			for (j = 0; j < 3; j++)
-			{
-				grid1[i][j] = future_grid[i][j];
-			}
-		}
+		copy_grid(future_grid, grid1);
 	} while (true);
 }
 
