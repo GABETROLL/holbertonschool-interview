@@ -78,7 +78,7 @@ int is_palindrome(listint_t **head)
 	listint_t **original_node;
 	listint_t **reversed_node;
 
-	if (!head || !(*head))
+	if (!head)
 		return (0);
 	/*
 	 * BUILD a reversed version of '*head'
@@ -110,6 +110,7 @@ int is_palindrome(listint_t **head)
 		fputs("Original and reversed have different lengths!!!", stderr);
 		exit(1);
 	}
+	free_listint(reversed);
 	return (1);
 }
 
