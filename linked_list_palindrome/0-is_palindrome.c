@@ -1,5 +1,6 @@
 #include "lists.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 /**
  * add_nodeint_start - Adds a new node of type
@@ -85,20 +86,33 @@ int is_palindrome(listint_t **head)
 	listint_t **node = head;
 
 	while (*node)
+	{
 		add_nodeint_start(&reversed, (*node)->n);
+		node = &((*node)->next);
+	}
 
 	/*
 	 * Comparing the reversed sequence with the original.
 	 * Returns 1 if all of the n's match, and 0 if they dont'.
 	 */
 	listint_t **original_node = head;
-	listint_t **reversed_node = reversed;
+	listint_t **reversed_node = &reversed;
 
-	while (1)
+	/*
+	 * Both linked lists should be the same length,
+	 * since one is just the reverse of the other.
+	 */
+	while ((*original_node) && (*reversed_node))
 	{
-		if ((*original_node)->n != ((*reversed_node)->n))
+		if ((*original_node)->n != (*reversed_node)->n)
 			return (0);
+
+		original_node = &((*original_node)->next);
+		reversed_node = &((*reversed_node)->next);
 	}
+
+	if (*original_node || *reversed_node)
+		puts("Original and reversed have different lengths!!!");
 
 	return (1);
 }
