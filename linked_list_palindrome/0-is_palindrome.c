@@ -3,68 +3,60 @@
 #include <stdio.h>
 
 /**
- * add_nodeint_start - Adds a new node of type
- * 'listint_t', at the beggining of '*head'
- * (making the new node's 'next' be '*head'
- * and replacing '*head' with the new node pointer).
- * This function then returns that node.
- * THE NODE MUST BE FREED WITH
- * free(<returned node address>)
+ * _is_palindrome - Using a pointer to a double-pointer
+ * to the head node of a linked list,
+ * this function calls itself with the same 'head'
+ * and a pointer to '*tail''s next pointer,
+ * so that the recursive calls find the end of the linked list.
+ * (not finding '*tail' means we can return 1, since an empty
+ * linked list is a palindrome, and if it weren't empty,
+ * the parent call would handle that).
+ * Once the inner-most calls get started,
+ * the head and tail nodes of the linked list are checked
+ * to be equal, and the inner-most call is over.
+ * Then the 2nd most inward nodes from both ends are checked,
+ * and so on and so forth.
+ * Since the tail argument is stored locally in each function call,
+ * it acts like a stack of pointers in the linked list,
+ * and '*head' ACTS LIKE A GLOBAL POINTER TO THE CURRENT
+ * HEAD NODE TO CHECK, WHICH SHOULD ALWAYS MOVE FOWARD.
+ * THIS MEANS THAT THE VARIABLE CONTAINING YOUR '*head'
+ * SHOULD NOW BE THE END OF THE LINKED LIST.
  *
- * @head: pointer to pointer of the head node of
- * the linked list of type 'listint_t'.
+ * @head: pointer to a double pointer to the head node
+ * of a linked list of ints. IT SHOULD ACT LIKE A GLOBAL COUNTER
+ * OUTSIDE OF THE SCOPES OF THIS FUNCTION TO KEEP TRACK OF
+ * THE SEQUENCE OF INTS FROM THE HEAD, WHILE...
  *
- * (I think visualizing the pointer to each node
- * as part of the node itself makes it easier to think
- * about this problem)
+ * @tail: ...WILL KEEP TRACK OF THE REVERSE SEQUENCE OF INTS
+ * FROM THE TAIL, USING THE FUNCTION CALL STACK. THIS MEANS
+ * THAT IN THE BEGGINING, 'tail' MUST BE == '*head', and
+ * will progress with each call, until it can no longer move
+ * foward.
  *
- * IF 'head' IS NULL, THIS FUNCTION JUST RETURNS NULL
- * BEFORE DOING ANTHING.
- *
- * @n: 'n' value of new node
- *
- * Return: address of the new node, or NULL if
- * this function failed.
- * IF THE RETURNED NODE ADDRESS ISN'T NULL,
- * THE MEMORY SPACE FOR THE NODE MUST BE FREED
- * WITH free(<returned node address>)
+ * Return: Weather or not the sequence of ints in '***head'
+ * is a palindrome, using recursion
  */
-listint_t *add_nodeint_start(listint_t **head, const int n)
+int _is_palindrome(listint_t ***head, listint_t **tail)
 {
-	listint_t *new;
+	if (*tail)
+	{
+		int inner_result = _is_palindrome(head, &((*tail)->next));
 
-	if (!head)
-		return (NULL);
+		int result = inner_result && (**head)->n == (*tail)->n;
 
-	new = malloc(sizeof(listint_t));
+		*head = &((**head)->next);
 
-	if (!new)
-		return (NULL);
-
-	new->n = n;
-	new->next = *head;
-
-	*head = new;
-
-	return (new);
+		return (result);
+	}
+	return (1);
 }
 
 /**
  * is_palindrome - Calculates
  * weather or not '*head' is a palindrome.
- * If we go through each node in '*head',
- * and we make anothe linked list that's the
- * reverse of '*head', we can then make
- * a liner scan of '*head' and the reversed list,
- * and check if they match.
  *
- * @head: pointer to pointer of the head node of
- * the linked list of type 'listint_t'.
- * (I think visualizing the pointer to each node
- * as part of the node itself makes it easier to think
- * about this problem)
- * IF 'head' IS NULL, THIS FUNCTION JUST RETURNS NULL
- * BEFORE DOING ANTHING.
+ * @head: pointer to pointer to head node of linked list
  *
  * Return: 1 if the linked list in '*head'
  * is the same when reversed,
@@ -72,45 +64,6 @@ listint_t *add_nodeint_start(listint_t **head, const int n)
  */
 int is_palindrome(listint_t **head)
 {
-	/* reversed version of '*head' */
-	listint_t *reversed = NULL;
-	/* for scanning the original linked list and the reversed one */
-	listint_t **original_node;
-	listint_t **reversed_node;
-
-	if (!head)
-		return (0);
-	/*
-	 * BUILD a reversed version of '*head'
-	 * stored in '*reversed'
-	 */
-	original_node = head;
-	while (*original_node)
-	{
-		add_nodeint_start(&reversed, (*original_node)->n);
-		original_node = &((*original_node)->next);
-	}
-	/*
-	 * Comparing the reversed sequence with the original.
-	 * Returns 1 if all of the n's match, and 0 if they dont'.
-	 */
-	original_node = head;
-	reversed_node = &reversed;
-	/* If we reached the end of one, the other one should have ended too */
-	while ((*original_node) && (*reversed_node))
-	{
-		if ((*original_node)->n != (*reversed_node)->n)
-			return (0);
-
-		original_node = &((*original_node)->next);
-		reversed_node = &((*reversed_node)->next);
-	}
-	if (*original_node || *reversed_node)
-	{
-		fputs("Original and reversed have different lengths!!!", stderr);
-		exit(1);
-	}
-	free_listint(reversed);
-	return (1);
+	return (_is_palindrome(&head, head));
 }
 
