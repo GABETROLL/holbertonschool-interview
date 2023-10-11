@@ -1,4 +1,6 @@
 #include "palindrome.h"
+#include <stddef.h>
+#include <stdio.h>
 
 /**
  * is_palindrome - Converts
@@ -15,36 +17,43 @@ int is_palindrome(unsigned long n)
 {
 	char digits[21] = {0};
 	/* the ULONG limit has 20 digits. */
-	size_t digit = 0;
-	size_t other_digit = 0;
+	size_t right_digit_index = 0;
+	size_t left_digit_index;
 
 	/*
-	 * initialize 'digits' to be an array of 0's,
-	 * except for the terminating null byte.
+	 * Convert 'n' into its string form, in 'digits'.
+	 * 'digits' first starts as an array of 21 null bytes,
+	 * but when 'n' runs out of digits, the remaining null bytes
+	 * indicate 'digits's end.
+	 *
+	 * The digits are being written backwards, but it shouldn't
+	 * matter!
 	 */
-	for (; digit < 20; digit++)
-		digits[digit] = '0';
-
-	/*
-	 * Convert 'n' into its string form, in 'digits'
-	 */
-	for (digit = 19; ; digit--)
-	{
-		digits[digit] = n % 10;
+	do {
+		digits[right_digit_index] = '0' + n % 10;
 		n /= 10;
 
-		if (digit == 0)
-			break;
-	}
+		right_digit_index++;
+	} while (n);
+
+	printf("%s\n", digits);
 
 	/*
 	 * Compare the digits in 'digits'
 	 * from the left and right
 	 */
-	while (digit <= other_digit)
+	right_digit_index--; /* move back to last digit */
+	left_digit_index = 0;
+
+	printf("left_digit_index = %lu; right_digit_index = %lu\n", left_digit_index, right_digit_index);
+
+	while (left_digit_index < right_digit_index)
 	{
-		if (digits[digit] != digits[other_digit])
+		if (digits[left_digit_index] != digits[right_digit_index])
 			return (0);
+
+		left_digit_index++;
+		right_digit_index--;
 	}
 
 	return (1);
