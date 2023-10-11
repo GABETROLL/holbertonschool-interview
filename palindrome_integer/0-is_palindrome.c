@@ -36,16 +36,12 @@ int is_palindrome(unsigned long n)
 		right_digit_index++;
 	} while (n);
 
-	printf("%s\n", digits);
-
 	/*
 	 * Compare the digits in 'digits'
 	 * from the left and right
 	 */
 	right_digit_index--; /* move back to last digit */
 	left_digit_index = 0;
-
-	printf("left_digit_index = %lu; right_digit_index = %lu\n", left_digit_index, right_digit_index);
 
 	while (left_digit_index < right_digit_index)
 	{
